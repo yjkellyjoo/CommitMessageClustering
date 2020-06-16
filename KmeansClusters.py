@@ -3,9 +3,10 @@ from nltk.cluster import KMeansClusterer
 
 from sklearn.base import BaseEstimator, TransformerMixin
 
+
 class KMeansClusters(BaseEstimator, TransformerMixin):
 
-    def __init__ (self, k=2):
+    def __init__ (self, k=5):
         """
         :param k: indicating the number of clusters
         """
