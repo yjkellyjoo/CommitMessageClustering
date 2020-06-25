@@ -1,5 +1,6 @@
 import KmeansClusters
 import TextNormalizer
+import Preprocessor
 from mysqlModule import *
 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -21,7 +22,7 @@ if __name__ == "__main__":
         message = cursor.fetchone()
         message = message[0]
 
-        # word_tokenize the messages
+        # tokenize the messages
         while message is not None:
             for word in word_tokenize(message):
                 # preprocess the tokens

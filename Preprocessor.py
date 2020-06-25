@@ -4,7 +4,7 @@ import pickle
 from nltk.tokenize import wordpunct_tokenize
 
 
-class preprocessor(object):
+class Preprocessor(object):
     def __init__(self, corpus, target=None):
         self.corpus = corpus
         self.target = target
@@ -22,6 +22,8 @@ class preprocessor(object):
         return os.path.normpath(os.path.join(self.target, parent, basename))
 
     def tokenize(self, fileid):
+        # TODO: customize stopwords
+        ## TODO: "corpus.message" 항목 어딘가에 만들어야 함
         for message in self.corpus.message(fileids=fileid):
             yield wordpunct_tokenize(message)
 
@@ -44,3 +46,10 @@ class preprocessor(object):
 
         return target
 
+    def transform(self, fileids=None, categories=None):
+
+        if not os.path.exists(self.target):
+            os.makedirs(self.target)
+
+        for fileid in self.fileids(fileids, categories):
+            yield self.process(fileid)
