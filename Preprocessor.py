@@ -1,7 +1,7 @@
 import os
 import pickle
 
-from nltk.tokenize import wordpunct_tokenize
+from nltk import pos_tag, wordpunct_tokenize, sent_tokenize
 
 
 class Preprocessor(object):
@@ -25,7 +25,10 @@ class Preprocessor(object):
         # TODO: customize stopwords
         ## TODO: "corpus.message" 항목 어딘가에 만들어야 함
         for message in self.corpus.message(fileids=fileid):
-            yield wordpunct_tokenize(message)
+            yield [
+                pos_tag(wordpunct_tokenize(sent))
+                for sent in sent_tokenize(message)
+            ]
 
     def process(self, fileid):
         target = self.abspath(fileid)

@@ -1,6 +1,7 @@
 import KmeansClusters
 import TextNormalizer
 import Preprocessor
+import PickledCorpusReader
 from mysqlModule import *
 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -22,11 +23,9 @@ if __name__ == "__main__":
         message = cursor.fetchone()
         message = message[0]
 
-        # tokenize the messages
         while message is not None:
-            for word in word_tokenize(message):
-                # preprocess the tokens
-
+            # TODO: tokenize the messages
+            Preprocessor.Preprocessor.tokenize(message)
 
             message = cursor.fetchone()
             message = message[0]
@@ -39,8 +38,8 @@ if __name__ == "__main__":
     docs = corpus.docs( )
 
     model = Pipeline([
-        ('norm', TextNormalizer)
-        ('vect', TfidfVectorizer)
+        ('norm', TextNormalizer()),
+        ('vect', TfidfVectorizer()),
         ('clusters', KmeansClusters(k=2))
     ])
 
