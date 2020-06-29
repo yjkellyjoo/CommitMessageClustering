@@ -1,8 +1,7 @@
 import unicodedata
 
-from nltk import pos_tag
+from nltk.corpus import wordnet as wn
 from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
 from nltk.stem.wordnet import WordNetLemmatizer
 
 from sklearn.base import BaseEstimator, TransformerMixin
@@ -30,15 +29,15 @@ class TextNormalizer(BaseEstimator, TransformerMixin):
             if not self.is_punct(token) and not self.is_stopword(token)
         ]
 
-    # def lemmatize(self, token, pos_tag):
-    #     tag = {
-    #         'N': wn.NOUN,
-    #         'V': wn.VERB,
-    #         'R': wn.ADV,
-    #         'J': wn.ADJ
-    #     }.get(pos_tag[0], wn.NOUN)
-    #
-    #     return self.lemmatizer.lemmatize(token, tag)
+    def lemmatize(self, token, pos_tag):
+        tag = {
+            'N': wn.NOUN,
+            'V': wn.VERB,
+            'R': wn.ADV,
+            'J': wn.ADJ
+        }.get(pos_tag[0], wn.NOUN)
+
+        return self.lemmatizer.lemmatize(token, tag)
 
     def transform(self, documents):
         return [' '.join(self.normalize(doc)) for doc in documents]

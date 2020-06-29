@@ -1,13 +1,19 @@
 import os
 import pickle
 
-from nltk import pos_tag, wordpunct_tokenize, sent_tokenize
+from nltk import wordpunct_tokenize, sent_tokenize
 
 
 class Preprocessor(object):
     def __init__(self, corpus, target=None):
         self.corpus = corpus
         self.target = target
+
+    def fileids(self, fileids=None, categories=None):
+        fileids = self.corpus.resolve(fileids, categories)
+        if fileids:
+            return fileids
+        return self.corpus.fileids()
 
     def abspath(self, fileid):
         parent = os.path.relpath(
@@ -26,7 +32,7 @@ class Preprocessor(object):
         ## TODO: "corpus.message" 항목 어딘가에 만들어야 함
         for message in self.corpus.message(fileids=fileid):
             yield [
-                pos_tag(wordpunct_tokenize(sent))
+                wordpunct_tokenize(sent)
                 for sent in sent_tokenize(message)
             ]
 

@@ -17,21 +17,16 @@ if __name__ == "__main__":
     # request query
     query = "SELECT message FROM git.TB_COMMIT;"
 
-    cursor = connection.cursor()
-    try:
-        cursor.execute(query)
-        message = cursor.fetchone()
-        message = message[0]
+    message = execute_read_one_query(connection, query)
+    message = message[0]
+    tokens = []
 
-        while message is not None:
-            # TODO: tokenize the messages
-            Preprocessor.Preprocessor.tokenize(message)
+    while message is not None:
+        # TODO: tokenize the messages
+        tokens = Preprocessor.Preprocessor.tokenize(message)
 
-            message = cursor.fetchone()
-            message = message[0]
+        message = execute_read_one_query(connection, query)
 
-    except Error as e:
-        print(f"The error '{e}' occurred")
 
 
     corpus = PickledCorpusReader('../corpus')
