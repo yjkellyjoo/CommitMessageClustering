@@ -1,14 +1,8 @@
-import KmeansClusters
-import TextNormalizer
-import Preprocessor
-import PickledCorpusReader
-from mysqlModule import *
+from src import TextNormalizer, Preprocessor, PickledCorpusReader, KmeansClusters
+from src.mysqlModule import *
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.pipeline import Pipeline
-
-import json
-
 
 if __name__ == "__main__":
     # connection
