@@ -19,6 +19,7 @@ class TextNormalizer(BaseEstimator, TransformerMixin):
         return all(unicodedata.category(char).startswith('P') for char in token)
 
     def is_stopword(self, token):
+        # TODO: customize stopwords
         return token.lower() in self.stopwords
 
     def normalize(self, document):
@@ -41,3 +42,10 @@ class TextNormalizer(BaseEstimator, TransformerMixin):
 
     def transform(self, documents):
         return [' '.join(self.normalize(doc)) for doc in documents]
+
+
+
+
+    # #TODO:
+    # # normalize the pickles
+    # message = TextNormalizer.TextNormalizer.normalize()

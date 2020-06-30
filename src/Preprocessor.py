@@ -5,39 +5,31 @@ from nltk import wordpunct_tokenize, sent_tokenize
 
 
 class Preprocessor(object):
-    def __init__(self, corpus, target=None):
-        self.corpus = corpus
+    def __init__(self, message, reponame, commitid, target=None):
+        self.message = message
+        self.reponame = reponame
+        self.fileid = commitid
         self.target = target
 
-    def fileids(self, fileids=None, categories=None):
-        fileids = self.corpus.resolve(fileids, categories)
-        if fileids:
-            return fileids
-        return self.corpus.fileids()
+    # def fileids(self, fileids=None, categories=None):
+    #     fileids = self.corpus.resolve(fileids, categories)
+    #     if fileids:
+    #         return fileids
+    #     return self.corpus.fileids()
 
-    def abspath(self, fileid):
-        parent = os.path.relpath(
-            os.path.dirname(self.corpus.abspath(fileid)), self.corpus.root
-        )
+    def abspath(self):
+        basename = self.fileid + '.pickle'
 
-        basename = os.path.basename(fileid)
-        name, ext = os.path.splitext(basename)
+        return os.path.normpath(os.path.join(self.target, self.reponame, basename))
 
-        basename = name + '.pickle'
+    def tokenize(self):
+        yield [
+            wordpunct_tokenize(sent)
+            for sent in sent_tokenize(self.message)
+        ]
 
-        return os.path.normpath(os.path.join(self.target, parent, basename))
-
-    def tokenize(self, fileid):
-        # TODO: customize stopwords
-        ## TODO: "corpus.message" 항목 어딘가에 만들어야 함
-        for message in self.corpus.message(fileids=fileid):
-            yield [
-                wordpunct_tokenize(sent)
-                for sent in sent_tokenize(message)
-            ]
-
-    def process(self, fileid):
-        target = self.abspath(fileid)
+    def process(self):
+        target = self.abspath()
         parent = os.path.dirname(target)
 
         if not os.path.exists(parent):
@@ -46,7 +38,7 @@ class Preprocessor(object):
         if not os.path.isdir(parent):
             raise ValueError("Not a directory. Please provide a directory name to write preprocessed data to. ")
 
-        document = list(self.tokenize(fileid))
+        document = list(self.tokenize())
 
         with open(target, 'wb') as f:
             pickle.dump(document, f, pickle.HIGHEST_PROTOCOL)
@@ -54,11 +46,19 @@ class Preprocessor(object):
         del document
 
         return target
+        # return document
 
-    def transform(self, fileids=None, categories=None):
+    # def transform(self, fileids=None, categories=None):
+    #
+    #     if not os.path.exists(self.target):
+    #         os.makedirs(self.target)
+    #
+    #     for fileid in self.fileids(fileids, categories):
+    #         yield self.process(fileid)
+
+    def transform(self):
 
         if not os.path.exists(self.target):
             os.makedirs(self.target)
 
-        for fileid in self.fileids(fileids, categories):
-            yield self.process(fileid)
+        return self.process()
