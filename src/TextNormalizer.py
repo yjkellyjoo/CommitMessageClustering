@@ -42,10 +42,3 @@ class TextNormalizer(BaseEstimator, TransformerMixin):
 
     def transform(self, documents):
         return [' '.join(self.normalize(doc)) for doc in documents]
-
-
-
-
-    # #TODO:
-    # # normalize the pickles
-    # message = TextNormalizer.TextNormalizer.normalize()
