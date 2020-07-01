@@ -18,7 +18,7 @@ class Preprocessor(object):
     #     return self.corpus.fileids()
 
     def abspath(self):
-        basename = self.reponame + self.fileid + '.pickle'
+        basename = self.reponame + "_" + self.fileid + '.pickle'
 
         return os.path.normpath(os.path.join(self.target, basename))
 

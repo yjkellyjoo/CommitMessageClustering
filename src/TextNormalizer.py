@@ -40,5 +40,8 @@ class TextNormalizer(BaseEstimator, TransformerMixin):
 
         return self.lemmatizer.lemmatize(token, tag)
 
+    def fit(self, X, y=None):
+        return self
+
     def transform(self, documents):
         return [' '.join(self.normalize(doc)) for doc in documents]
