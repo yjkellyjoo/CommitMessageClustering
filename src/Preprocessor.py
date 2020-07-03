@@ -1,7 +1,7 @@
 import os
 import pickle
 
-from nltk import wordpunct_tokenize, sent_tokenize
+from nltk import wordpunct_tokenize, sent_tokenize, pos_tag
 
 
 class Preprocessor(object):
@@ -24,7 +24,7 @@ class Preprocessor(object):
 
     def tokenize(self):
         yield [
-            wordpunct_tokenize(sent)
+            pos_tag(wordpunct_tokenize(sent))
             for sent in sent_tokenize(self.message)
         ]
 

@@ -130,3 +130,6 @@ dmypy.json
 
 # Jetbrain
 .idea/
+
+# specific
+corpus/*

@@ -5,13 +5,21 @@ from src.TextNormalizer import TextNormalizer
 from src.KmeansClusters import KMeansClusters
 from src.PickledCorpusReader import PickledCorpusReader
 
-CAT_PATTERN = r'vulnerable/.*'
-CATEGORY = 'vulnerable'
-
 if __name__ == "__main__":
-    # TODO:
-    corpus = PickledCorpusReader('../corpus', cat_pattern=CAT_PATTERN)
-    docs = corpus.docs(categories=CATEGORY)
+    corpus = PickledCorpusReader('../corpus')
+    # print(corpus.categories())
+    # print(corpus.fileids())
+
+    docs = corpus.docs(categories=['vulnerable'])
+    # print(docs)
+
+    ## tagging check
+    # f = open('../pickled.txt', "w", encoding='UTF-8')
+    # list_docs = list(docs)
+    # for doc in list_docs:
+    #     f.write(str(doc)+'\n')
+    #
+    # f.close()
 
     model = Pipeline([
         ('norm', TextNormalizer()),
@@ -19,7 +27,9 @@ if __name__ == "__main__":
         ('clusters', KMeansClusters(k=2))
     ])
 
-    clusters = model.fit_transform(docs)
+    # clusters = model.fit_transform(docs)
+
+
     # print(model.named_steps['norm'])
     #
     # pickles = list(corpus.fileids())
