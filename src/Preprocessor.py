@@ -1,7 +1,8 @@
 import os
 import pickle
 
-from nltk import wordpunct_tokenize, sent_tokenize, pos_tag
+from nltk import sent_tokenize, pos_tag
+from nltk.tokenize.repp import ReppTokenizer
 
 
 class Preprocessor(object):
@@ -23,8 +24,9 @@ class Preprocessor(object):
         return os.path.normpath(os.path.join(self.target, basename))
 
     def tokenize(self):
+        tokenizer = ReppTokenizer('../Repp')
         yield [
-            pos_tag(wordpunct_tokenize(sent))
+            pos_tag(tokenizer.tokenize(sentence=sent))
             for sent in sent_tokenize(self.message)
         ]
 

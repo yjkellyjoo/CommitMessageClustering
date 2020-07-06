@@ -14,18 +14,18 @@ if __name__ == "__main__":
     # print(docs)
 
     ## tagging check
-    # f = open('../pickled.txt', "w", encoding='UTF-8')
-    # list_docs = list(docs)
-    # for doc in list_docs:
-    #     f.write(str(doc)+'\n')
-    #
-    # f.close()
+    f = open('../pickled.txt', "w", encoding='UTF-8')
+    list_docs = list(docs)
+    for doc in list_docs:
+        f.write(str(doc)+'\n')
 
-    model = Pipeline([
-        ('norm', TextNormalizer()),
-        ('vect', TfidfVectorizer()),
-        ('clusters', KMeansClusters(k=2))
-    ])
+    f.close()
+
+    # model = Pipeline([
+    #     ('norm', TextNormalizer()),
+    #     ('vect', TfidfVectorizer()),
+    #     ('clusters', KMeansClusters(k=2))
+    # ])
 
     # clusters = model.fit_transform(docs)
 
