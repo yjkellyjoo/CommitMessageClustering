@@ -4,16 +4,12 @@ from sklearn.pipeline import Pipeline
 from src.TextNormalizer import TextNormalizer
 from src.KmeansClusters import KMeansClusters
 from src.PickledCorpusReader import PickledCorpusReader
+from src.OneHotVectorizer import OneHotVetorizer
 
 if __name__ == "__main__":
     corpus = PickledCorpusReader('../corpus')
-    # print(corpus.categories())
-    # print(corpus.fileids())
 
     docs = corpus.docs(categories=['vulnerable'])
-    # docs = corpus.docs(categories=['news'])
-
-    # print(docs)
 
     ## tagging check
     # f = open('../pickled.txt', "w", encoding='UTF-8')
@@ -23,14 +19,13 @@ if __name__ == "__main__":
     #
     # f.close()
 
+    ## modeling - KMeansCluster with OneHotVectorizing
     model = Pipeline([
         ('norm', TextNormalizer()),
-        ('vect', TfidfVectorizer()),
+        ('vect', OneHotVetorizer()),
         ('clusters', KMeansClusters(k=5))
     ])
-
     clusters = model.fit_transform(docs)
-
 
     # print(model.named_steps['norm'])
     #
@@ -38,11 +33,4 @@ if __name__ == "__main__":
     # for idx, cluster in enumerate(clusters):
     #     print("Document '{}' assigned to cluster {}. ".format(pickles[idx], cluster))
 
-    # num_of_tokens = 0
-    # for message in messages:
-    #     message = message[0]
-    #     tokens = word_tokenize(message)
-    #     num_of_tokens = num_of_tokens + len(tokens)
-    # print(num_of_tokens)
-    #
     # corpus = tfidf.fit_transform(corpus)
