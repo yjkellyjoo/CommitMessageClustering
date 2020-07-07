@@ -26,7 +26,7 @@ if __name__ == "__main__":
     model = Pipeline([
         ('norm', TextNormalizer()),
         ('vect', TfidfVectorizer()),
-        ('clusters', KMeansClusters(k=2))
+        ('clusters', KMeansClusters(k=5))
     ])
 
     clusters = model.fit_transform(docs)
