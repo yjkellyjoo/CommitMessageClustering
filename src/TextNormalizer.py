@@ -25,7 +25,9 @@ class TextNormalizer(BaseEstimator, TransformerMixin):
     def normalize(self, document):
         return [
             self.lemmatize(token, tag).lower()
-            for (token, tag) in document
+            for paragraph in document
+            for sentence in paragraph
+            for (token, tag) in sentence
             if not self.is_punct(token) and not self.is_stopword(token)
         ]
 

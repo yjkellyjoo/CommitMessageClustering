@@ -11,23 +11,25 @@ if __name__ == "__main__":
     # print(corpus.fileids())
 
     docs = corpus.docs(categories=['vulnerable'])
+    # docs = corpus.docs(categories=['news'])
+
     # print(docs)
 
     ## tagging check
-    f = open('../pickled.txt', "w", encoding='UTF-8')
-    list_docs = list(docs)
-    for doc in list_docs:
-        f.write(str(doc)+'\n')
+    # f = open('../pickled.txt', "w", encoding='UTF-8')
+    # list_docs = list(docs)
+    # for doc in list_docs:
+    #     f.write(str(doc)+'\n')
+    #
+    # f.close()
 
-    f.close()
+    model = Pipeline([
+        ('norm', TextNormalizer()),
+        ('vect', TfidfVectorizer()),
+        ('clusters', KMeansClusters(k=2))
+    ])
 
-    # model = Pipeline([
-    #     ('norm', TextNormalizer()),
-    #     ('vect', TfidfVectorizer()),
-    #     ('clusters', KMeansClusters(k=2))
-    # ])
-
-    # clusters = model.fit_transform(docs)
+    clusters = model.fit_transform(docs)
 
 
     # print(model.named_steps['norm'])
