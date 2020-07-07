@@ -1,36 +1,26 @@
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.pipeline import Pipeline
+import pickle
+import json
 
-from src.TextNormalizer import TextNormalizer
-from src.KmeansClusters import KMeansClusters
 from src.PickledCorpusReader import PickledCorpusReader
-from src.OneHotVectorizer import OneHotVetorizer
+from src.constants import *
 
 if __name__ == "__main__":
-    corpus = PickledCorpusReader('../corpus')
+    corpus = PickledCorpusReader(CORPUS_DIR)
 
-    docs = corpus.docs(categories=['vulnerable'])
+    pickles = list(corpus.fileids(categories=CATEGORIES))
+    kmeans_model = pickle.load(open(KMEANS_MODEL_FILE, 'rb'))
 
-    ## tagging check
-    # f = open('../pickled.txt', "w", encoding='UTF-8')
-    # list_docs = list(docs)
-    # for doc in list_docs:
-    #     f.write(str(doc)+'\n')
-    #
-    # f.close()
+    clusters = {}
+    clusters['cluster 1'] = []
+    clusters['cluster 2'] = []
+    clusters['cluster 3'] = []
+    clusters['cluster 4'] = []
+    clusters['cluster 5'] = []
 
-    ## modeling - KMeansCluster with OneHotVectorizing
-    model = Pipeline([
-        ('norm', TextNormalizer()),
-        ('vect', OneHotVetorizer()),
-        ('clusters', KMeansClusters(k=5))
-    ])
-    clusters = model.fit_transform(docs)
+    for idx, cluster in enumerate(kmeans_model):
+        clusters['cluster ' + str(cluster+1)].append(
+            str(pickles[idx]) + ": " + str(list(corpus.sents(pickles[idx])))
+        )
 
-    # print(model.named_steps['norm'])
-    #
-    # pickles = list(corpus.fileids())
-    # for idx, cluster in enumerate(clusters):
-    #     print("Document '{}' assigned to cluster {}. ".format(pickles[idx], cluster))
-
-    # corpus = tfidf.fit_transform(corpus)
+    with open('./clusters.txt', 'w') as clusters_file:
+        json.dump(clusters, clusters_file)
