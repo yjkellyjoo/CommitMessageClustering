@@ -9,6 +9,7 @@ from src.resource.OneHotVectorizer import OneHotVetorizer
 
 from src.resource.constants import *
 
+NUMBER_OF_CLUSTERS = 2
 
 if __name__ == "__main__":
     corpus = PickledCorpusReader(CORPUS_DIR)
@@ -18,12 +19,12 @@ if __name__ == "__main__":
     model = Pipeline([
         ('norm', TextNormalizer()),
         ('vect', OneHotVetorizer()),
-        ('clusters', KMeansClusters(k=5))
+        ('clusters', KMeansClusters(k=NUMBER_OF_CLUSTERS))
     ])
     clusters = model.fit_transform(docs)
 
     ## save model into pickle file
-    pickle.dump(clusters, open(KMEANS_MODEL_FILE, 'wb'))
+    pickle.dump(clusters, open('./output/KMeansCluster_'+str(NUMBER_OF_CLUSTERS)+'.model', 'wb'))
 
     # print(model.named_steps['norm'])
     #
