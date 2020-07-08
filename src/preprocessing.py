@@ -1,6 +1,6 @@
-from src.Preprocessor import Preprocessor
+from src.lib.Preprocessor import Preprocessor
 
-from src.mysqlModule import *
+from src.lib.mysqlModule import *
 
 def preprocessing(table_name, corpus_dir):
 
