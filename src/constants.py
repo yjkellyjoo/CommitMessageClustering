@@ -3,5 +3,5 @@ PKL_PATTERN_NEWS = r'(?!\.)[a-z_\s]+/[a-f0-9]+\.pickle'
 CAT_PATTERN = r'([a-z_\s]+)/.*'
 
 CORPUS_DIR = '../corpus'
-CATEGORIES = ['vulnerable']
+CATEGORIES = ['vulnerable', 'not_vulnerable']
 KMEANS_MODEL_FILE = './KMeansCluster_5.model'

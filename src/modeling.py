@@ -15,14 +15,6 @@ if __name__ == "__main__":
     corpus = PickledCorpusReader(CORPUS_DIR)
     docs = corpus.docs(categories=CATEGORIES)
 
-    ## tagging check
-    # f = open('../pickled.txt', "w", encoding='UTF-8')
-    # list_docs = list(docs)
-    # for doc in list_docs:
-    #     f.write(str(doc)+'\n')
-    #
-    # f.close()
-
     ## modeling - KMeansCluster with OneHotVectorizing
     model = Pipeline([
         ('norm', TextNormalizer()),
@@ -31,6 +23,7 @@ if __name__ == "__main__":
     ])
     clusters = model.fit_transform(docs)
 
+    ## save model into pickle file
     pickle.dump(clusters, open(KMEANS_MODEL_FILE, 'wb'))
 
     # print(model.named_steps['norm'])

@@ -50,22 +50,23 @@ class PickledCorpusReader(CategorizedCorpusReader, CorpusReader):
             with open(path, 'rb') as f:
                 yield pickle.load(f)
 
-    # def paras(self, fileids=None, categories=None):
-    #     """
-    #     Returns a generator of paragraphs where each paragraph is a list of
-    #     sentences, which is in turn a list of (token, tag) tuples.
-    #     """
-    #     for doc in self.docs(fileids, categories):
-    #         for paragraph in doc:
-    #             yield paragraph
+    def paras(self, fileids=None, categories=None):
+        """
+        Returns a generator of paragraphs where each paragraph is a list of
+        sentences, which is in turn a list of (token, tag) tuples.
+        """
+        for doc in self.docs(fileids, categories):
+            for paragraph in doc:
+                yield paragraph
 
     def sents(self, fileids=None, categories=None):
         """
         Returns a generator of sentences where each sentence is a list of
         (token, tag) tuples.
         """
-        for sentence in self.docs(fileids, categories=None):
-            yield sentence
+        for para in self.paras(fileids, categories):
+            for sentence in para:
+                yield sentence
 
     def tagged(self, fileids=None, categories=None):
         for sent in self.sents(fileids, categories):
