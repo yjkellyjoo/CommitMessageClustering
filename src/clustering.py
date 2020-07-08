@@ -18,9 +18,9 @@ if __name__ == "__main__":
     clusters['cluster 5'] = []
 
     for idx, cluster in enumerate(kmeans_model):
-        clusters['cluster ' + str(cluster+1)].append(
-            str(pickles[idx]) + ": " + str(list(corpus.sents(pickles[idx])))
-        )
+        clusters['cluster ' + str(cluster+1)].append({
+            pickles[idx]: list(corpus.sents(pickles[idx]))
+        })
 
-    with open('./clusters.txt', 'w') as clusters_file:
+    with open('./clusters.json', 'w') as clusters_file:
         json.dump(clusters, clusters_file)
