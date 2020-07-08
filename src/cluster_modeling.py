@@ -2,12 +2,12 @@ import pickle
 
 from sklearn.pipeline import Pipeline
 
-from src.lib.TextNormalizer import TextNormalizer
-from src.lib.KmeansClusters import KMeansClusters
-from src.lib.PickledCorpusReader import PickledCorpusReader
-from src.lib.OneHotVectorizer import OneHotVetorizer
+from src.resource.TextNormalizer import TextNormalizer
+from src.resource.KmeansClusters import KMeansClusters
+from src.resource.PickledCorpusReader import PickledCorpusReader
+from src.resource.OneHotVectorizer import OneHotVetorizer
 
-from src.lib.constants import *
+from src.resource.constants import *
 
 
 if __name__ == "__main__":

@@ -1,8 +1,8 @@
 import pickle
 import json
 
-from src.lib.PickledCorpusReader import PickledCorpusReader
-from src.lib.constants import *
+from src.resource.PickledCorpusReader import PickledCorpusReader
+from src.resource.constants import *
 
 if __name__ == "__main__":
     corpus = PickledCorpusReader(CORPUS_DIR)
