@@ -1,4 +1,5 @@
 import pickle
+import time
 
 from sklearn.pipeline import Pipeline
 
@@ -8,8 +9,6 @@ from src.resource.PickledCorpusReader import PickledCorpusReader
 from src.resource.OneHotVectorizer import OneHotVetorizer
 
 from src.resource.constants import *
-
-NUMBER_OF_CLUSTERS = 2
 
 if __name__ == "__main__":
     corpus = PickledCorpusReader(CORPUS_DIR)
@@ -21,7 +20,11 @@ if __name__ == "__main__":
         ('vect', OneHotVetorizer()),
         ('clusters', KMeansClusters(k=NUMBER_OF_CLUSTERS))
     ])
+
+    run_time = time.time()
     clusters = model.fit_transform(docs)
+    run_time = time.time() - run_time
+    print("runtime: {}", run_time)
 
     ## save model into pickle file
     pickle.dump(clusters, open('./output/KMeansCluster_'+str(NUMBER_OF_CLUSTERS)+'.model', 'wb'))
