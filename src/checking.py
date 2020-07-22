@@ -4,18 +4,23 @@ import json
 from src.resource.PickledCorpusReader import PickledCorpusReader
 from src.resource.constants import *
 
-NUMBER_OF_CLUSTERS = 2
 
 if __name__ == "__main__":
     corpus = PickledCorpusReader(CORPUS_DIR)
     pickles = list(corpus.fileids(categories=CATEGORIES))
 
+    ## corpus check
+    f = open('output/pickles_list.txt', "w", encoding='UTF-8')
+    for one in list(pickles):
+        f.write(str(one)+'\n')
+    f.close()
+
     ## tagging check
-    # f = open('output/pickles.txt', "w", encoding='UTF-8')
-    # for one in list(pickles):
-    #     f.write(str(one)+'\n')
-    #
-    # f.close()
+    docs = list(corpus.docs(categories=CATEGORIES))
+    f = open('output/tokens.txt', "w", encoding='UTF-8')
+    for one in list(docs):
+        f.write(str(one)+'\n')
+    f.close()
 
     ## clustering check
     kmeans_model = pickle.load(open('./output/KMeansCluster_'+str(NUMBER_OF_CLUSTERS)+'.model', 'rb'))

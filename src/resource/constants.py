@@ -4,3 +4,6 @@ CAT_PATTERN = r'([a-z_\s]+)/.*'
 
 CORPUS_DIR = '../corpus'
 CATEGORIES = ['vulnerable', 'not_vulnerable']
+# CATEGORIES = ['vulnerable']
+
+NUMBER_OF_CLUSTERS = 5
