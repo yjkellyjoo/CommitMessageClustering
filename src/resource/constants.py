@@ -6,4 +6,4 @@ CORPUS_DIR = '../corpus'
 CATEGORIES = ['vulnerable', 'not_vulnerable']
 # CATEGORIES = ['vulnerable']
 
-NUMBER_OF_CLUSTERS = 5
+NUMBER_OF_CLUSTERS = 3
